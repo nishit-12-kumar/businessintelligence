@@ -1,0 +1,65 @@
+{
+    "recommendations_issued": 48,
+    "accepted": 34,
+    "rejected": 14,
+    "implemented": 27,
+    "successful": 22,
+    "logs": [
+        {
+            "insight": "South revenue drop -12.4%",
+            "recommendation": "Review pricing + logistics SLA",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-25 10:30:00"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-29 19:04:25"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-29 19:13:43"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-29 19:13:55"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-29 19:14:53"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-29 19:15:29"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-29 19:19:47"
+        }
+    ]
+}

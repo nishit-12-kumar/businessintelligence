@@ -1,0 +1,14 @@
+date,region,product,competitor_name,competitor_price,event_type,description
+2026-08-20,South,XPhone Pro,TechRival,45000,price_reduction,"TechRival reduces XPhone Pro equivalent price from ₹50,000 to ₹45,000 in South region"
+2026-08-04,West,TabMax,Competitor_5,50544,price_reduction,Standard competitor event
+2026-08-22,South,NovaWatch,Competitor_1,51994,price_reduction,Standard competitor event
+2026-08-19,East,XPhone Pro,Competitor_5,30747,new_product_launch,Standard competitor event
+2026-08-24,North,NovaWatch,Competitor_4,25574,marketing_campaign,Standard competitor event
+2026-08-15,West,TabMax,Competitor_1,41027,price_reduction,Standard competitor event
+2026-08-03,East,XPhone Pro,Competitor_1,20735,new_product_launch,Standard competitor event
+2026-07-21,South,XPhone Pro,Competitor_1,30962,price_reduction,Standard competitor event
+2026-08-06,North,TabMax,Competitor_2,53189,marketing_campaign,Standard competitor event
+2026-08-22,South,TabMax,Competitor_2,25475,price_reduction,Standard competitor event
+2026-08-23,South,NovaWatch,Competitor_5,30029,price_reduction,Standard competitor event
+2026-08-26,North,NovaWatch,Competitor_5,42931,price_reduction,Standard competitor event
+2026-07-26,North,TabMax,Competitor_1,40756,new_product_launch,Standard competitor event

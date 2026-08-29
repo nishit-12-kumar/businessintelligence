@@ -1,0 +1,65 @@
+date,region,product,campaign,spend,clicks,conversions
+2026-07-06,North,XPhone Pro,Brand Awareness,492370,4923,246
+2026-07-06,North,TabMax,Product Launch,304002,3040,152
+2026-07-06,South,XPhone Pro,Performance,492078,4920,246
+2026-07-06,South,TabMax,Seasonal Sale,288866,2888,144
+2026-07-06,East,XPhone Pro,Seasonal Sale,504238,5042,252
+2026-07-06,East,TabMax,Seasonal Sale,289164,2891,144
+2026-07-06,West,XPhone Pro,Performance,484003,4840,242
+2026-07-06,West,TabMax,Performance,295370,2953,147
+2026-07-13,North,XPhone Pro,Seasonal Sale,518715,5187,259
+2026-07-13,North,TabMax,Seasonal Sale,305026,3050,152
+2026-07-13,South,XPhone Pro,Product Launch,505096,5050,252
+2026-07-13,South,TabMax,Seasonal Sale,286226,2862,143
+2026-07-13,East,XPhone Pro,Brand Awareness,492254,4922,246
+2026-07-13,East,TabMax,Product Launch,290310,2903,145
+2026-07-13,West,XPhone Pro,Brand Awareness,502435,5024,251
+2026-07-13,West,TabMax,Brand Awareness,298823,2988,149
+2026-07-20,North,XPhone Pro,Product Launch,519710,5197,259
+2026-07-20,North,TabMax,Brand Awareness,300102,3001,150
+2026-07-20,South,XPhone Pro,Brand Awareness,491079,4910,245
+2026-07-20,South,TabMax,Product Launch,308982,3089,154
+2026-07-20,East,XPhone Pro,Brand Awareness,509389,5093,254
+2026-07-20,East,TabMax,Performance,311207,3112,155
+2026-07-20,West,XPhone Pro,Seasonal Sale,493864,4938,246
+2026-07-20,West,TabMax,Brand Awareness,293306,2933,146
+2026-07-27,North,XPhone Pro,Brand Awareness,479225,4792,239
+2026-07-27,North,TabMax,Seasonal Sale,290535,2905,145
+2026-07-27,South,XPhone Pro,Seasonal Sale,501829,5018,250
+2026-07-27,South,TabMax,Performance,299535,2995,149
+2026-07-27,East,XPhone Pro,Product Launch,512997,5129,256
+2026-07-27,East,TabMax,Product Launch,298876,2988,149
+2026-07-27,West,XPhone Pro,Brand Awareness,478117,4781,239
+2026-07-27,West,TabMax,Seasonal Sale,292573,2925,146
+2026-08-03,North,XPhone Pro,Seasonal Sale,509358,5093,254
+2026-08-03,North,TabMax,Seasonal Sale,300350,3003,150
+2026-08-03,South,XPhone Pro,Seasonal Sale,476523,4765,238
+2026-08-03,South,TabMax,Product Launch,298422,2984,149
+2026-08-03,East,XPhone Pro,Seasonal Sale,494858,4948,247
+2026-08-03,East,TabMax,Performance,293077,2930,146
+2026-08-03,West,XPhone Pro,Brand Awareness,484114,4841,242
+2026-08-03,West,TabMax,Seasonal Sale,294662,2946,147
+2026-08-10,North,XPhone Pro,Seasonal Sale,479460,4794,239
+2026-08-10,North,TabMax,Product Launch,288592,2885,144
+2026-08-10,South,XPhone Pro,Brand Awareness,492146,4921,246
+2026-08-10,South,TabMax,Brand Awareness,305373,3053,152
+2026-08-10,West,XPhone Pro,Seasonal Sale,507441,5074,253
+2026-08-10,West,TabMax,Product Launch,287607,2876,143
+2026-08-17,North,XPhone Pro,Seasonal Sale,511841,5118,255
+2026-08-17,North,TabMax,Seasonal Sale,307363,3073,153
+2026-08-17,North,NovaWatch,Brand Awareness,201289,2012,100
+2026-08-17,South,XPhone Pro,Product Launch,325000,3250,125
+2026-08-17,South,TabMax,Brand Awareness,295123,2951,147
+2026-08-17,South,NovaWatch,Performance,202918,2029,101
+2026-08-17,West,XPhone Pro,Product Launch,487217,4872,243
+2026-08-17,West,TabMax,Seasonal Sale,314595,3145,157
+2026-08-17,West,NovaWatch,Brand Awareness,208673,2086,104
+2026-08-24,North,XPhone Pro,Brand Awareness,480089,4800,240
+2026-08-24,North,TabMax,Product Launch,295960,2959,147
+2026-08-24,North,NovaWatch,Performance,193213,1932,96
+2026-08-24,South,XPhone Pro,Seasonal Sale,325000,3250,125
+2026-08-24,South,TabMax,Product Launch,293552,2935,146
+2026-08-24,South,NovaWatch,Seasonal Sale,191113,1911,95
+2026-08-24,West,XPhone Pro,Brand Awareness,479011,4790,239
+2026-08-24,West,TabMax,Seasonal Sale,285547,2855,142
+2026-08-24,West,NovaWatch,Brand Awareness,209647,2096,104

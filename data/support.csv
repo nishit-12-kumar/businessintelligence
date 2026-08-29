@@ -1,0 +1,79 @@
+date,region,product,ticket_id,ticket_text,issue_type,severity
+2026-08-27,South,XPhone Pro,TCK-1000,Delivery partner reports logistics bottleneck in South region,delivery_delay,high
+2026-08-24,South,XPhone Pro,TCK-1001,"Customer complaint: delivery promised in 2 days, now showing 7 days",delivery_delay,critical
+2026-08-24,South,XPhone Pro,TCK-1002,"XPhone Pro shipment stuck at warehouse, estimated 3-day delay",delivery_delay,high
+2026-08-26,South,XPhone Pro,TCK-1003,"Order #XXXXX delayed by 5 days, customer requesting cancellation",delivery_delay,high
+2026-08-26,South,XPhone Pro,TCK-1004,"XPhone Pro shipment stuck at warehouse, estimated 3-day delay",delivery_delay,high
+2026-08-21,South,XPhone Pro,TCK-1005,Delivery partner reports logistics bottleneck in South region,delivery_delay,critical
+2026-08-23,South,XPhone Pro,TCK-1006,"Customer complaint: delivery promised in 2 days, now showing 7 days",delivery_delay,high
+2026-08-23,South,XPhone Pro,TCK-1007,"Order #XXXXX delayed by 5 days, customer requesting cancellation",delivery_delay,high
+2026-08-25,South,XPhone Pro,TCK-1008,Delivery partner reports logistics bottleneck in South region,delivery_delay,high
+2026-08-26,South,XPhone Pro,TCK-1009,"Customer complaint: delivery promised in 2 days, now showing 7 days",delivery_delay,critical
+2026-08-24,South,XPhone Pro,TCK-1010,"Order #XXXXX delayed by 5 days, customer requesting cancellation",delivery_delay,high
+2026-08-21,South,XPhone Pro,TCK-1011,"Customer complaint: delivery promised in 2 days, now showing 7 days",delivery_delay,critical
+2026-07-01,South,TabMax,TCK-1012,Standard baseline support ticket text,general_inquiry,high
+2026-07-11,East,XPhone Pro,TCK-1013,Standard baseline support ticket text,billing_issue,medium
+2026-08-02,South,TabMax,TCK-1014,Standard baseline support ticket text,product_defect,critical
+2026-07-23,South,TabMax,TCK-1015,Standard baseline support ticket text,general_inquiry,low
+2026-07-02,West,XPhone Pro,TCK-1016,Standard baseline support ticket text,general_inquiry,critical
+2026-08-23,North,NovaWatch,TCK-1017,Standard baseline support ticket text,billing_issue,high
+2026-07-31,North,XPhone Pro,TCK-1018,Standard baseline support ticket text,feature_request,low
+2026-08-19,South,XPhone Pro,TCK-1019,Standard baseline support ticket text,billing_issue,critical
+2026-08-18,West,NovaWatch,TCK-1020,Standard baseline support ticket text,delivery_delay,low
+2026-07-22,West,XPhone Pro,TCK-1021,Standard baseline support ticket text,billing_issue,critical
+2026-08-06,South,TabMax,TCK-1022,Standard baseline support ticket text,billing_issue,critical
+2026-08-26,North,NovaWatch,TCK-1023,Standard baseline support ticket text,product_defect,high
+2026-07-04,North,XPhone Pro,TCK-1024,Standard baseline support ticket text,product_defect,critical
+2026-08-23,West,NovaWatch,TCK-1025,Standard baseline support ticket text,billing_issue,critical
+2026-08-16,North,NovaWatch,TCK-1026,Standard baseline support ticket text,delivery_delay,critical
+2026-08-17,East,NovaWatch,TCK-1027,Standard baseline support ticket text,general_inquiry,low
+2026-08-18,East,NovaWatch,TCK-1028,Standard baseline support ticket text,billing_issue,medium
+2026-08-20,West,TabMax,TCK-1029,Standard baseline support ticket text,feature_request,medium
+2026-08-16,North,XPhone Pro,TCK-1030,Standard baseline support ticket text,feature_request,high
+2026-08-08,East,XPhone Pro,TCK-1031,Standard baseline support ticket text,delivery_delay,critical
+2026-08-16,East,NovaWatch,TCK-1032,Standard baseline support ticket text,feature_request,high
+2026-07-02,South,XPhone Pro,TCK-1033,Standard baseline support ticket text,billing_issue,high
+2026-08-02,South,TabMax,TCK-1034,Standard baseline support ticket text,general_inquiry,medium
+2026-08-16,West,XPhone Pro,TCK-1035,Standard baseline support ticket text,feature_request,low
+2026-07-15,North,XPhone Pro,TCK-1036,Standard baseline support ticket text,general_inquiry,medium
+2026-07-04,West,XPhone Pro,TCK-1037,Standard baseline support ticket text,product_defect,medium
+2026-08-19,East,NovaWatch,TCK-1038,Standard baseline support ticket text,feature_request,high
+2026-08-12,East,XPhone Pro,TCK-1039,Standard baseline support ticket text,feature_request,medium
+2026-07-10,West,TabMax,TCK-1040,Standard baseline support ticket text,product_defect,high
+2026-08-12,West,TabMax,TCK-1041,Standard baseline support ticket text,general_inquiry,low
+2026-07-18,North,XPhone Pro,TCK-1042,Standard baseline support ticket text,feature_request,medium
+2026-07-12,West,XPhone Pro,TCK-1043,Standard baseline support ticket text,general_inquiry,low
+2026-08-25,North,NovaWatch,TCK-1044,Standard baseline support ticket text,delivery_delay,high
+2026-08-20,North,TabMax,TCK-1045,Standard baseline support ticket text,delivery_delay,high
+2026-07-11,East,XPhone Pro,TCK-1046,Standard baseline support ticket text,general_inquiry,critical
+2026-07-26,South,TabMax,TCK-1047,Standard baseline support ticket text,delivery_delay,critical
+2026-08-23,East,NovaWatch,TCK-1048,Standard baseline support ticket text,general_inquiry,medium
+2026-07-09,North,XPhone Pro,TCK-1049,Standard baseline support ticket text,product_defect,low
+2026-08-26,North,TabMax,TCK-1050,Standard baseline support ticket text,delivery_delay,medium
+2026-08-21,North,TabMax,TCK-1051,Standard baseline support ticket text,billing_issue,high
+2026-08-16,South,NovaWatch,TCK-1052,Standard baseline support ticket text,billing_issue,medium
+2026-08-21,East,NovaWatch,TCK-1053,Standard baseline support ticket text,delivery_delay,medium
+2026-08-21,South,XPhone Pro,TCK-1054,Standard baseline support ticket text,delivery_delay,critical
+2026-08-21,East,NovaWatch,TCK-1055,Standard baseline support ticket text,product_defect,low
+2026-08-19,North,XPhone Pro,TCK-1056,Standard baseline support ticket text,delivery_delay,low
+2026-08-10,North,TabMax,TCK-1057,Standard baseline support ticket text,feature_request,medium
+2026-08-16,North,NovaWatch,TCK-1058,Standard baseline support ticket text,general_inquiry,high
+2026-08-23,East,NovaWatch,TCK-1059,Standard baseline support ticket text,billing_issue,high
+2026-08-01,South,XPhone Pro,TCK-1060,Standard baseline support ticket text,delivery_delay,critical
+2026-08-17,South,NovaWatch,TCK-1061,Standard baseline support ticket text,delivery_delay,high
+2026-07-02,South,XPhone Pro,TCK-1062,Standard baseline support ticket text,product_defect,high
+2026-08-19,East,NovaWatch,TCK-1063,Standard baseline support ticket text,delivery_delay,low
+2026-08-18,East,NovaWatch,TCK-1064,Standard baseline support ticket text,product_defect,high
+2026-07-19,South,TabMax,TCK-1065,Standard baseline support ticket text,feature_request,critical
+2026-07-07,North,XPhone Pro,TCK-1066,Standard baseline support ticket text,delivery_delay,medium
+2026-08-26,West,NovaWatch,TCK-1067,Standard baseline support ticket text,general_inquiry,low
+2026-08-23,North,NovaWatch,TCK-1068,Standard baseline support ticket text,general_inquiry,medium
+2026-08-20,North,NovaWatch,TCK-1069,Standard baseline support ticket text,product_defect,medium
+2026-08-01,West,TabMax,TCK-1070,Standard baseline support ticket text,billing_issue,low
+2026-07-04,West,XPhone Pro,TCK-1071,Standard baseline support ticket text,general_inquiry,high
+2026-08-16,South,NovaWatch,TCK-1072,Standard baseline support ticket text,general_inquiry,medium
+2026-08-17,North,NovaWatch,TCK-1073,Standard baseline support ticket text,feature_request,critical
+2026-07-18,South,XPhone Pro,TCK-1074,Standard baseline support ticket text,general_inquiry,low
+2026-08-17,South,NovaWatch,TCK-1075,Standard baseline support ticket text,billing_issue,medium
+2026-08-24,West,XPhone Pro,TCK-1076,Standard baseline support ticket text,general_inquiry,high
+2026-07-30,North,TabMax,TCK-1077,Standard baseline support ticket text,general_inquiry,low

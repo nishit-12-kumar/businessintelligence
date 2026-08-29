@@ -1,0 +1,84 @@
+revenue:
+  definition: "Total sales revenue"
+  formula: "SUM(units * price)"
+  source: sales
+  dimensions: [region, product, date]
+  drivers:
+    - name: volume
+      description: "Changes in units sold"
+      data_source: sales
+    - name: price
+      description: "Changes in selling price"
+      data_source: sales
+    - name: marketing_spend
+      description: "Changes in marketing investment"
+      data_source: marketing
+    - name: delivery_issues
+      description: "Impact of delivery problems on orders"
+      data_source: support
+    - name: competitor_pricing
+      description: "Competitor price movements"
+      data_source: competitor
+  threshold: 5
+  refresh_frequency: daily
+  lineage: "sales.csv → kpi_engine → revenue"
+  access:
+    executive: all
+    regional_manager: assigned_region
+
+orders:
+  definition: "Total number of orders placed"
+  formula: "SUM(orders)"
+  source: sales
+  dimensions: [region, product, date]
+  drivers:
+    - name: marketing_spend
+      description: "Marketing investment impact on order volume"
+      data_source: marketing
+    - name: delivery_issues
+      description: "Delivery problems affecting order completion"
+      data_source: support
+  threshold: 5
+  refresh_frequency: daily
+  lineage: "sales.csv → kpi_engine → orders"
+  access:
+    executive: all
+    regional_manager: assigned_region
+
+asp:
+  definition: "Average Selling Price per unit"
+  formula: "SUM(revenue) / SUM(units)"
+  source: sales
+  dimensions: [region, product, date]
+  drivers:
+    - name: competitor_pricing
+      description: "Competitor price changes forcing price adjustments"
+      data_source: competitor
+    - name: price
+      description: "Direct price changes"
+      data_source: sales
+  threshold: 3
+  refresh_frequency: daily
+  lineage: "sales.csv → kpi_engine → asp"
+  access:
+    executive: all
+    regional_manager: assigned_region
+
+conversion_rate:
+  definition: "Conversion rate from marketing clicks to orders"
+  formula: "SUM(orders) / SUM(clicks)"
+  source: [sales, marketing]
+  dimensions: [region, product]
+  drivers:
+    - name: marketing_spend
+      description: "Marketing effectiveness and spend levels"
+      data_source: marketing
+    - name: volume
+      description: "Overall demand changes"
+      data_source: sales
+  threshold: 5
+  refresh_frequency: weekly
+  lineage: "sales.csv + marketing.csv → kpi_engine → conversion_rate"
+  access:
+    executive: all
+    regional_manager: assigned_region
