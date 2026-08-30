@@ -1,0 +1,176 @@
+<!-- Anomaly Detail View -->
+<div class="page-intro">
+  <div>
+    <div class="eyebrow-badge">
+      <span class="badge-dot"></span> Anomaly Root-Cause Investigation
+    </div>
+    <h1 class="page-title">{{ kpi_info.get('definition', kpi_name)|capitalize }} Anomaly<br><em>{{ region }} · {{ product }}</em></h1>
+    <p class="page-desc">
+      Detailed variance decomposition, empirical hypothesis correlation, knowledge graph validation, and confidence scoring for this specific signal.
+    </p>
+  </div>
+</div>
+
+<!-- KPI Movement -->
+<article class="panel">
+  <div class="panel-head">
+    <div>
+      <div class="eyebrow">WHAT HAPPENED?</div>
+      <h3>{{ kpi_name|upper }} Movement ({{ region }})</h3>
+    </div>
+    <span class="tag calc">DuckDB Calculated</span>
+  </div>
+  <div class="inv-stat-grid">
+    <div class="inv-stat-box">
+      <span>Current Period</span>
+      <strong>{{ "%.2f"|format(kpi_info.get('current_value', 0.0)) }}</strong>
+    </div>
+    <div class="inv-stat-box">
+      <span>Previous Period</span>
+      <strong>{{ "%.2f"|format(kpi_info.get('previous_value', 0.0)) }}</strong>
+    </div>
+    <div class="inv-stat-box">
+      <span>Change %</span>
+      <strong class="{{ 'negative-text' if kpi_info.get('change_pct', 0) < 0 else 'positive-text' }}">{{ '+' if kpi_info.get('change_pct', 0) >= 0 else '' }}{{ "%.1f"|format(kpi_info.get('change_pct', 0.0)) }}%</strong>
+    </div>
+    <div class="inv-stat-box">
+      <span>Confidence Score</span>
+      <strong>{{ confidence.get('score', 80) }}/100 ({{ confidence.get('level', 'HIGH') }})</strong>
+    </div>
+  </div>
+</article>
+
+<!-- Drivers & Actions -->
+<div class="inv-grid section-gap">
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="eyebrow">Attribution Drivers</div>
+        <h3>Variance Decomposition</h3>
+      </div>
+      <span class="tag calc">Normalized 100%</span>
+    </div>
+    <div class="driver-list">
+      {% for d in drivers %}
+      <div class="driver-row">
+        <div class="driver-label">
+          <strong>{{ d.driver_name }}</strong>
+          <small>{{ d.direction }} impact</small>
+        </div>
+        <div class="driver-bar-track">
+          <i class="{{ 'negative' if d.direction == 'negative' else '' }}" style="width: {{ [100, (d.contribution_pct|abs)]|min }}%"></i>
+        </div>
+        <span class="driver-pct">{{ "%.1f"|format(d.contribution_pct) }}%</span>
+      </div>
+      {% endfor %}
+    </div>
+  </article>
+
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="eyebrow">Recommendations</div>
+        <h3>Guardrailed Action Plan</h3>
+      </div>
+      <span class="tag safe">{{ confidence.get('level', 'HIGH') }} Guardrail</span>
+    </div>
+    <div class="rec-list">
+      {% for rec in recommendations %}
+      <div class="rec-card">
+        <div class="rec-number">{{ loop.index }}</div>
+        <div class="rec-content">
+          <div class="rec-header">
+            <strong>{{ rec.action }}</strong>
+            <span class="priority-tag {{ rec.priority|lower }}">{{ rec.priority }}</span>
+          </div>
+          <p class="rec-reason">{{ rec.reason }}</p>
+          <div class="rec-meta-row">
+            <span>Driver: <strong>{{ rec.driver }}</strong></span>
+            <span>Owner: <strong>{{ rec.owner }}</strong></span>
+            <span>Impact: <strong>{{ rec.expected_impact }}</strong></span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </article>
+</div>
+
+<!-- What-If Simulator Form -->
+<article class="panel section-gap">
+  <div class="panel-head">
+    <div>
+      <div class="eyebrow">Scenario Projection</div>
+      <h3>Interactive What-If Recovery Simulator</h3>
+    </div>
+    <span class="tag simulated">Linear Elasticity</span>
+  </div>
+
+  <div class="whatif-controls">
+    <label class="field">
+      <span class="field-label">Target Driver</span>
+      <select id="simDriverSel" class="select-input">
+        {% for d in drivers %}
+        <option value="{{ d.driver_name }}">{{ d.driver_name }} ({{ "%.1f"|format(d.contribution_pct) }}%)</option>
+        {% endfor %}
+      </select>
+    </label>
+    <div class="range-wrap">
+      <div class="range-slider-header">
+        <span class="field-label">Simulate Driver Improvement</span>
+        <strong id="simValLabel" style="color: var(--mint); font-size: 16px;">+3.0%</strong>
+      </div>
+      <input type="range" id="simSlider" class="range-input" min="0.5" max="10.0" step="0.5" value="3.0">
+    </div>
+  </div>
+
+  <div class="sim-grid">
+    <div class="sim-card">
+      <span>Projected KPI Recovery</span>
+      <strong id="simRecoveryVal">+3.0%</strong>
+    </div>
+    <div class="sim-card">
+      <span>Estimated Monthly Recovery</span>
+      <strong id="simMonthlyVal">₹5.4 L / mo</strong>
+    </div>
+    <div class="sim-card">
+      <span>Projection Status</span>
+      <strong id="simConfidenceVal" style="font-size: 14px; color: var(--text-pure);">Elastic Scenario</strong>
+    </div>
+  </div>
+</article>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const slider = document.getElementById('simSlider');
+  const simDriver = document.getElementById('simDriverSel');
+  const updateSim = async () => {
+    if (!slider) return;
+    const imp = Number(slider.value);
+    document.getElementById('simValLabel').textContent = `+${imp.toFixed(1)}%`;
+    try {
+      const res = await fetch('/api/simulate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          kpi: '{{ kpi_name }}',
+          region: '{{ region }}',
+          product: '{{ product }}',
+          driver: simDriver ? simDriver.value : 'Volume',
+          improvement: imp,
+          current_value: {{ kpi_info.get('current_value', 4200000.0) }},
+          original_impact: -6.2
+        })
+      });
+      const data = await res.json();
+      document.getElementById('simRecoveryVal').textContent = `+${Number(data.estimated_kpi_recovery_pct || 0).toFixed(1)}%`;
+      document.getElementById('simMonthlyVal').textContent = `₹${(Number(data.estimated_recovery_monthly || 0)/1e5).toFixed(1)} L / mo`;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  slider?.addEventListener('input', updateSim);
+  simDriver?.addEventListener('change', updateSim);
+  updateSim();
+});
+</script>

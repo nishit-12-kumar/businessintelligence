@@ -46,6 +46,8 @@ def create_connection() -> duckdb.DuckDBPyConnection:
     conn.execute(f"CREATE TABLE IF NOT EXISTS marketing AS SELECT * FROM read_csv_auto('{data_dir}/marketing.csv')")
     conn.execute(f"CREATE TABLE IF NOT EXISTS support AS SELECT * FROM read_csv_auto('{data_dir}/support.csv')")
     conn.execute(f"CREATE TABLE IF NOT EXISTS competitor AS SELECT * FROM read_csv_auto('{data_dir}/competitor.csv')")
+    if os.path.exists(os.path.join(data_dir, 'inventory.csv')):
+        conn.execute(f"CREATE TABLE IF NOT EXISTS inventory AS SELECT * FROM read_csv_auto('{data_dir}/inventory.csv')")
     
     return conn
 
@@ -103,6 +105,9 @@ def calculate_kpi(conn: duckdb.DuckDBPyConnection, kpi_name: str,
     kpi_def = kpi_defs[kpi_name]
     periods = get_date_periods(conn)
     
+    if isinstance(allowed_regions, str):
+        allowed_regions = [allowed_regions]
+
     # Build region filter — SECURITY: only allowed regions
     if region:
         if region not in allowed_regions:
@@ -157,6 +162,15 @@ def calculate_kpi(conn: duckdb.DuckDBPyConnection, kpi_name: str,
                 AND date BETWEEN '{start}' AND '{end}'
             ) m
         """
+    elif kpi_name == 'inventory_stockout_rate':
+        sql_template = """
+            SELECT CASE WHEN COUNT(stock_units) > 0 
+                        THEN SUM(stockout_events) * 100.0 / COUNT(stock_units) 
+                        ELSE 0 END as value
+            FROM inventory
+            WHERE {region_filter} {product_filter}
+            AND date BETWEEN '{start}' AND '{end}'
+        """
     else:
         raise ValueError(f"Unknown KPI: {kpi_name}")
     
@@ -199,7 +213,7 @@ def calculate_kpi(conn: duckdb.DuckDBPyConnection, kpi_name: str,
 
 def calculate_all_kpis(conn: duckdb.DuckDBPyConnection, 
                        allowed_regions: List[str]) -> List[Dict]:
-    """Calculate all 4 KPIs for the dashboard.
+    """Calculate all defined KPIs for the dashboard.
     
     Args:
         conn: DuckDB connection
@@ -208,8 +222,15 @@ def calculate_all_kpis(conn: duckdb.DuckDBPyConnection,
     Returns:
         List of KPI result dicts
     """
+    import logging
+    logger = logging.getLogger(__name__)
     results = []
-    for kpi_name in ['revenue', 'orders', 'asp', 'conversion_rate']:
-        result = calculate_kpi(conn, kpi_name, allowed_regions)
-        results.append(result)
+    kpi_defs = load_kpi_definitions()
+    for kpi_name in kpi_defs.keys():
+        try:
+            result = calculate_kpi(conn, kpi_name, allowed_regions)
+            results.append(result)
+        except Exception as exc:
+            # Bug fix: log instead of silently swallowing — KPI failures must be visible
+            logger.warning("KPI calculation failed for '%s': %s", kpi_name, exc)
     return results

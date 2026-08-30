@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} · BusinessIntelligence.ai</title>
+  <meta name="description" content="AI-Powered Decision Intelligence for Modern Business Operations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body data-view="{{ view }}" data-role="{{ state.role }}">
+<div class="app-shell">
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-name">BusinessIntelligence<span>.ai</span></div>
+        <div class="brand-sub">Decision Intelligence</div>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="nav-item {% if view == 'overview' %}active{% endif %}" href="/" id="navOverview">
+        <span class="nav-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </span>
+        <span>Business Pulse</span>
+      </a>
+      <a class="nav-item {% if view == 'investigate' %}active{% endif %}" href="/investigation" id="navInvestigation">
+        <span class="nav-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/><path d="M10 7v6m3-3H7"/></svg>
+        </span>
+        <span>Investigation Workspace</span>
+      </a>
+      <a class="nav-item {% if view == 'security' %}active{% endif %}" href="/security" id="navSecurity">
+        <span class="nav-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        </span>
+        <span>Security & Access</span>
+      </a>
+      <a class="nav-item {% if view == 'lineage' %}active{% endif %}" href="/lineage" id="navLineage">
+        <span class="nav-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/></svg>
+        </span>
+        <span>Data Lineage</span>
+      </a>
+      <a class="nav-item {% if view == 'outcomes' %}active{% endif %}" href="/outcomes" id="navOutcomes">
+        <span class="nav-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </span>
+        <span>Outcomes & Telemetry</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="environment-card" id="envCard">
+      <div class="eyebrow">Runtime Core</div>
+      <div class="env-line">
+        <span class="live-dot"></span>
+        <strong id="envLabel">{{ 'Demo Mode (Offline-Safe)' if state.demo else 'Live Analytics Connected' }}</strong>
+      </div>
+      <p id="envDetail">{{ 'Deterministic evaluation is active.' if state.demo else 'Connected to DuckDB analytics & RBAC engine.' }}</p>
+    </div>
+
+    <!-- Role Switcher Trigger -->
+    <div class="account-wrapper">
+      <button class="account-card" id="accountButton" type="button" aria-expanded="false" aria-haspopup="true">
+        <span class="avatar">{{ state.role[:2].upper() }}</span>
+        <span class="account-copy">
+          <strong id="accountName">{{ roles.get(state.role, {}).get('label', state.role) }}</strong>
+          <small id="accountScope">{{ roles.get(state.role, {}).get('scope', 'Active Scope') }}</small>
+        </span>
+        <span class="chevron">▾</span>
+      </button>
+
+      <!-- Role Dropdown Menu -->
+      <div class="role-menu hidden" id="roleMenu" role="menu">
+        <div class="role-menu-header">Select Active Role</div>
+        {% for key, role in roles.items() %}
+        <button type="button" class="role-option {% if state.role == key %}selected{% endif %}" data-role="{{ key }}" role="menuitem">
+          <div class="role-option-title">
+            <strong>{{ role.get('label', key) }}</strong>
+            {% if state.role == key %}<span class="active-check">✓</span>{% endif %}
+          </div>
+          <small>{{ role.get('scope', '') }}</small>
+        </button>
+        {% endfor %}
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Workspace -->
+  <main class="main">
+    <header class="topbar">
+      <div class="mobile-brand">
+        <button class="icon-btn" id="menuButton" aria-label="Open navigation menu">☰</button>
+        <strong>BI<span>.ai</span></strong>
+      </div>
+      <div class="breadcrumb">
+        <span>Workspace</span>
+        <i class="sep">/</i>
+        <strong id="breadcrumbTitle">{{ title }}</strong>
+      </div>
+      <div class="topbar-actions">
+        <a class="ghost-btn report-top-btn" href="/api/report/investigation" download="BusinessIntelligence_AI_Detailed_Report.pdf" title="Download Comprehensive PDF Investigation & Architecture Report">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>PDF Report</span>
+        </a>
+        <div class="status-badge" id="topbarLiveBadge">
+          <span class="live-dot"></span>
+          <span>{{ 'Demo Active' if state.demo else 'Live DB Connected' }}</span>
+        </div>
+        <button class="icon-btn" id="refreshButton" title="Refresh data" aria-label="Refresh data">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+        </button>
+        <button class="icon-btn" id="settingsButton" title="Workspace Settings" aria-label="Workspace Settings">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <section class="page-container">
+      {% if view == 'overview' %}{% include 'pages/overview.html' %}{% endif %}
+      {% if view == 'investigate' %}{% include 'pages/investigation.html' %}{% endif %}
+      {% if view == 'security' %}{% include 'pages/security.html' %}{% endif %}
+      {% if view == 'lineage' %}{% include 'pages/lineage.html' %}{% endif %}
+      {% if view == 'outcomes' %}{% include 'pages/outcomes.html' %}{% endif %}
+      {% if dashboard_content %}{{ dashboard_content|safe }}{% endif %}
+    </section>
+  </main>
+</div>
+
+<!-- Settings Drawer (Slide-Over) -->
+<div class="settings-drawer" id="settingsDrawer" aria-hidden="true">
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <div class="drawer-inner">
+    <div class="drawer-head">
+      <div>
+        <div class="eyebrow">Workspace Configuration</div>
+        <h3>Control Panel</h3>
+      </div>
+      <button class="icon-btn" id="closeSettings" aria-label="Close settings drawer">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <label class="field">
+        <span class="field-label">Active Role</span>
+        <select id="globalRole" class="select-input">
+          {% for key, role in roles.items() %}
+          <option value="{{ key }}" {% if state.role == key %}selected{% endif %}>{{ role.get('label', key) }}</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label class="field">
+        <span class="field-label">Default Region</span>
+        <select id="globalRegion" class="select-input">
+          <option value="South" {% if state.region == 'South' %}selected{% endif %}>South</option>
+          <option value="North" {% if state.region == 'North' %}selected{% endif %}>North</option>
+          <option value="East" {% if state.region == 'East' %}selected{% endif %}>East</option>
+          <option value="West" {% if state.region == 'West' %}selected{% endif %}>West</option>
+        </select>
+      </label>
+
+      <div class="toggle-group">
+        <label class="toggle-row">
+          <div class="toggle-copy">
+            <strong>Demo Mode</strong>
+            <small>Deterministic offline-safe evaluation path.</small>
+          </div>
+          <input type="checkbox" id="globalDemo" {% if state.demo %}checked{% endif %}>
+          <i class="toggle-switch"></i>
+        </label>
+
+        <label class="toggle-row">
+          <div class="toggle-copy">
+            <strong>Simulate Stale Marketing Data</strong>
+            <small>Applies confidence penalty in the analytics engine.</small>
+          </div>
+          <input type="checkbox" id="globalStale" {% if state.stale %}checked{% endif %}>
+          <i class="toggle-switch"></i>
+        </label>
+      </div>
+
+      <button class="primary full-btn" id="saveSettings">Save Preferences <span>→</span></button>
+
+      <div class="drawer-note">
+        <strong>Security Notice:</strong> Role switching alters session context. Real RBAC authorization checks are always enforced server-side before DuckDB queries are constructed.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notifications -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  window.APP_STATE = {{ state | tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</body>
+</html>

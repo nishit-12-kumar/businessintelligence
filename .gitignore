@@ -45,6 +45,7 @@ venv.bak/
 .env
 .env.local
 .env.*.local
+.secret_key
 
 # IDE & Editor settings
 .vscode/

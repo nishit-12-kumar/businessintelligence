@@ -82,3 +82,23 @@ conversion_rate:
   access:
     executive: all
     regional_manager: assigned_region
+
+inventory_stockout_rate:
+  definition: "Warehouse Out-of-Stock Event Rate"
+  formula: "SUM(stockout_events) * 100.0 / COUNT(stock_units)"
+  source: inventory
+  dimensions: [region, product, date]
+  drivers:
+    - name: delivery_issues
+      description: "Warehouse stockouts and fulfillment delays"
+      data_source: support
+    - name: volume
+      description: "Surge in product volume demand"
+      data_source: sales
+  threshold: 4
+  refresh_frequency: daily
+  lineage: "inventory.csv → kpi_engine → inventory_stockout_rate"
+  access:
+    executive: all
+    regional_manager: assigned_region
+

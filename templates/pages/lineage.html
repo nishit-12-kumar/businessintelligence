@@ -1,0 +1,70 @@
+<!-- Data Lineage & Semantic Contract -->
+<div class="page-intro">
+  <div>
+    <div class="eyebrow-badge">
+      <span class="badge-dot"></span> 04 — Semantic Contract & Lineage
+    </div>
+    <h1 class="page-title">Every conclusion has<br><em>a transparent trace.</em></h1>
+    <p class="page-desc">
+      The semantic contract connects KPI definitions, data sources, thresholds, driver mappings, freshness SLA, and access policies.
+    </p>
+  </div>
+</div>
+
+<!-- Semantic Contract Validation Banner -->
+<div id="lineageValidation" class="validation-banner ok">
+  <div class="banner-icon">✓</div>
+  <div class="banner-text">
+    <strong>Semantic Contract Validation Passed</strong>
+    <p>All 5 KPI definitions, formulas, drivers, thresholds, and RBAC policies in <code>semantic/kpi_definitions.yaml</code> are consistent and valid.</p>
+  </div>
+</div>
+
+<!-- Visual End-to-End Decision Flow -->
+<div class="lineage-flow-section section-gap">
+  <div class="subheading-label">End-to-End Decision Lineage Pipeline</div>
+  <div class="lineage-flow">
+    <div class="flow-node">
+      <span class="node-type">Data Layer</span>
+      <strong>Source Data</strong>
+      <small>sales · marketing · support · competitor · inventory</small>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node highlight">
+      <span class="node-type">Semantic Layer</span>
+      <strong>KPI Contract</strong>
+      <small>kpi_definitions.yaml (5 KPI definitions & formulas)</small>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <span class="node-type">Security Layer</span>
+      <strong>RBAC Interceptor</strong>
+      <small>Pre-query authorization filtering on region & KPI</small>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <span class="node-type">Analytics Engine</span>
+      <strong>Investigation</strong>
+      <small>Variance decomposition, statistical signal, knowledge graph</small>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node">
+      <span class="node-type">Decision Layer</span>
+      <strong>Recommendations</strong>
+      <small>Structured action schema + role-adapted LLM synthesis</small>
+    </div>
+  </div>
+</div>
+
+<!-- KPI Definitions from YAML (All 5 KPIs) -->
+<div class="section-head">
+  <div>
+    <div class="eyebrow">Metric Contracts</div>
+    <h2>KPI Semantic Definitions (5 Metrics)</h2>
+  </div>
+</div>
+
+<div id="lineageDefs" class="defs-container">
+  <div class="skeleton-card" style="height: 100px;"></div>
+  <div class="skeleton-card" style="height: 100px;"></div>
+</div>

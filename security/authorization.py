@@ -39,6 +39,12 @@ ROLES: Dict[str, dict] = {
         "regions": ["West"],
         "description": "Access limited to West region data only"
     },
+    "ops_lead": {
+        "display_name": "Operations & Logistics Lead",
+        "level": "regional_manager",
+        "regions": ["North", "South", "East", "West"],
+        "description": "Supply chain & logistics fulfillment operations access"
+    },
     "analyst": {
         "display_name": "Data Analyst",
         "level": "executive",

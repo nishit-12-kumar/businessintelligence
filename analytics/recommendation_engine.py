@@ -4,6 +4,7 @@ Generates structured, guardrailed business recommendations based on the
 deterministic driver, evidence, and confidence scores.
 """
 from typing import List, Dict, Any
+from semantic.knowledge_graph import knowledge_graph
 
 def generate_recommendations(drivers: List[Dict], 
                              evidence: Dict[str, List[Dict]], 
@@ -133,15 +134,23 @@ def generate_recommendations(drivers: List[Dict],
                     action = f"Apply competitor matching discounts for {product or 'product'} at POS in {region}"
                     caveat = "Local managers must verify margin buffer before applying discounts."
                     
+                struct_action = knowledge_graph.get_structured_action(
+                    driver['driver_name'], region, product,
+                    f"Potential recovery: ₹{driver_rec_min:,.0f}–₹{driver_rec_max:,.0f}/month",
+                    f"{confidence_score}%", persona=persona
+                )
                 recommendations.append({
                     'action': action,
                     'reason': f"Competitor pricing pressure accounted for {contrib}% of the revenue drop.",
                     'supporting_evidence': f"Observed event: {ev_detail}",
-                    'expected_impact': f"Potential recovery: ₹{driver_rec_min:,.0f}–₹{driver_rec_max:,.0f}/month",
-                    'confidence': f"{confidence_score}%",
+                    'expected_impact': struct_action['expected_impact'],
+                    'confidence': struct_action['confidence'],
                     'priority': priority,
                     'risk_caveat': caveat,
-                    'driver': driver['driver_name']
+                    'driver': driver['driver_name'],
+                    'controllable_lever': struct_action['controllable_lever'],
+                    'owner': struct_action['owner'],
+                    'monitoring_plan': struct_action['monitoring_plan']
                 })
                 
             elif 'delivery' in name or 'support' in name:
@@ -158,15 +167,23 @@ def generate_recommendations(drivers: List[Dict],
                     action = f"Escalate unresolved Bengaluru shipment backlogs with delivery manager"
                     caveat = "Requires coordinate tracking with logistics center."
                     
+                struct_action = knowledge_graph.get_structured_action(
+                    driver['driver_name'], region, product,
+                    f"Potential recovery: ₹{driver_rec_min:,.0f}–₹{driver_rec_max:,.0f}/month",
+                    f"{confidence_score}%", persona=persona
+                )
                 recommendations.append({
                     'action': action,
                     'reason': f"Logistics issues contributed {contrib}% of the decline, causing customer cancellations.",
                     'supporting_evidence': ev_detail,
-                    'expected_impact': f"Potential recovery: ₹{driver_rec_min:,.0f}–₹{driver_rec_max:,.0f}/month",
-                    'confidence': f"{confidence_score}%",
+                    'expected_impact': struct_action['expected_impact'],
+                    'confidence': struct_action['confidence'],
                     'priority': priority,
                     'risk_caveat': caveat,
-                    'driver': driver['driver_name']
+                    'driver': driver['driver_name'],
+                    'controllable_lever': struct_action['controllable_lever'],
+                    'owner': struct_action['owner'],
+                    'monitoring_plan': struct_action['monitoring_plan']
                 })
                 
             elif 'marketing' in name:
@@ -180,27 +197,43 @@ def generate_recommendations(drivers: List[Dict],
                     action = f"Reinstate local performance campaigns for {product or 'product'} in {region}"
                     caveat = "Verify campaign click tracking is configured correctly."
                     
+                struct_action = knowledge_graph.get_structured_action(
+                    driver['driver_name'], region, product,
+                    f"Potential recovery: ₹{driver_rec_min:,.0f}–₹{driver_rec_max:,.0f}/month",
+                    f"{confidence_score}%", persona=persona
+                )
                 recommendations.append({
                     'action': action,
                     'reason': f"Marketing spend cuts contributed {contrib}% of the decline, reducing clicks/conversions.",
                     'supporting_evidence': f"Spend variance: {ev_detail}",
-                    'expected_impact': f"Potential recovery: ₹{driver_rec_min:,.0f}–₹{driver_rec_max:,.0f}/month",
-                    'confidence': f"{confidence_score}%",
+                    'expected_impact': struct_action['expected_impact'],
+                    'confidence': struct_action['confidence'],
                     'priority': priority,
                     'risk_caveat': caveat,
-                    'driver': driver['driver_name']
+                    'driver': driver['driver_name'],
+                    'controllable_lever': struct_action['controllable_lever'],
+                    'owner': struct_action['owner'],
+                    'monitoring_plan': struct_action['monitoring_plan']
                 })
                 
             elif 'other' not in name:
+                struct_action = knowledge_graph.get_structured_action(
+                    driver['driver_name'], region, product,
+                    f"Potential recovery: ₹{driver_rec_min:,.0f}–₹{driver_rec_max:,.0f}/month",
+                    f"{confidence_score}%", persona=persona
+                )
                 recommendations.append({
                     'action': f"Conduct deep-dive operational audit for {driver['driver_name']} in {region}",
                     'reason': f"{driver['driver_name']} accounted for {contrib}% of the overall metric movement.",
                     'supporting_evidence': "Correlation detected in multi-factor correlation matrix.",
-                    'expected_impact': f"Potential recovery: ₹{driver_rec_min:,.0f}–₹{driver_rec_max:,.0f}/month",
-                    'confidence': f"{confidence_score}%",
+                    'expected_impact': struct_action['expected_impact'],
+                    'confidence': struct_action['confidence'],
                     'priority': priority,
                     'risk_caveat': "Requires manual log inspection.",
-                    'driver': driver['driver_name']
+                    'driver': driver['driver_name'],
+                    'controllable_lever': struct_action['controllable_lever'],
+                    'owner': struct_action['owner'],
+                    'monitoring_plan': struct_action['monitoring_plan']
                 })
                 
         # Sort by priority

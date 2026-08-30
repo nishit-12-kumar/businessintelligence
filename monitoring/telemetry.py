@@ -4,7 +4,7 @@ Tracks latency, LLM calls, token usage, and estimated cost.
 """
 import time
 import os
-from typing import Dict, Optional
+from typing import Dict, Optional, Any, List
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 import random
@@ -107,7 +107,25 @@ class TelemetryTracker:
             'estimated_cost': self.estimated_cost,
             'input_tokens': self.input_tokens,
             'output_tokens': self.output_tokens,
-            'latency_sec': self.latency_sec
+            'latency_sec': self.latency_sec,
+            'economics': self.get_economics_breakdown()
+        }
+
+    def get_economics_breakdown(self) -> Dict[str, Any]:
+        """Return explicit LLM economics breakdown for free vs commercial paid tier."""
+        current_free_cost = 0.0
+        input_paid_cost = (self.input_tokens / 1000.0) * GEMINI_PRICING['input_per_1k_tokens_paid']
+        output_paid_cost = (self.output_tokens / 1000.0) * GEMINI_PRICING['output_per_1k_tokens_paid']
+        est_paid_per_iter = input_paid_cost + output_paid_cost
+        
+        return {
+            'free_tier_actual_cost': '$0.0000 (Gemini 2.0 Flash Free Tier)',
+            'paid_tier_input_rate': '$0.15 per 1M tokens ($0.00015/1k)',
+            'paid_tier_output_rate': '$0.60 per 1M tokens ($0.00060/1k)',
+            'estimated_cost_per_iteration': f"${est_paid_per_iter:.6f}",
+            'projected_cost_10k_runs': f"${est_paid_per_iter * 10000:.2f}/month",
+            'llm_calls_made': self.llm_calls,
+            'total_tokens': self.input_tokens + self.output_tokens
         }
 
 

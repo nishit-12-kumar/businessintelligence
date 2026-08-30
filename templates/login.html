@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login · BusinessIntelligence.ai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body style="display: grid; place-items: center; min-height: 100vh; padding: 20px;">
+  <div class="panel" style="width: min(440px, 100%); padding: 36px 32px; box-shadow: var(--shadow-lg);">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 24px;">
+      <div class="brand-mark">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7L12 12L22 7L12 2Z"/><path d="M2 17L12 22L22 17"/><path d="M2 12L12 17L22 12"/></svg>
+      </div>
+      <div>
+        <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; color: var(--text-pure);">BusinessIntelligence<span>.ai</span></h2>
+        <small style="color: var(--text-muted);">Decision Intelligence Platform</small>
+      </div>
+    </div>
+
+    <div class="eyebrow">Authentication Prototype</div>
+    <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 24px; color: var(--text-pure); margin: 6px 0 16px;">Select User Role</h3>
+    <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px;">
+      Select an authenticated role to initialize your role-based permission context. Pre-query RBAC enforcement will automatically restrict DuckDB SQL queries.
+    </p>
+
+    <form method="POST" action="/login" class="form-stack">
+      <label class="field">
+        <span class="field-label">Choose Role</span>
+        <select name="role" class="select-input" required>
+          {% for key, r in roles.items() %}
+          <option value="{{ key }}" {% if active_role == key %}selected{% endif %}>{{ r.get('label', key) }} ({{ r.get('scope', '') }})</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <button type="submit" class="primary full-btn" style="margin-top: 8px;">
+        <span>Sign In & Enter Platform</span>
+        <span>→</span>
+      </button>
+    </form>
+
+    <div class="source-note" style="margin-top: 24px;">
+      <span>💡 Prototyping Mode: No password required. Session role determines authorization scope.</span>
+    </div>
+  </div>
+</body>
+</html>

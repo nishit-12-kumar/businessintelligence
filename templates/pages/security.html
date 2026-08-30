@@ -1,0 +1,235 @@
+<!-- Security & Access (RBAC) -->
+<div class="page-intro">
+  <div>
+    <div class="eyebrow-badge">
+      <span class="badge-dot"></span> 03 — Role-Based Access Control
+    </div>
+    <h1 class="page-title">Access is part<br><em>of the answer.</em></h1>
+    <p class="page-desc">
+      Security is enforced <strong>before</strong> the database query is constructed. The frontend is never the security boundary.
+    </p>
+  </div>
+</div>
+
+<div class="two-col section-gap">
+  <!-- Active Role Card -->
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="eyebrow">Active Context</div>
+        <h3 id="securityRoleName">C-Level Executive</h3>
+      </div>
+      <span class="tag safe">RBAC Enforced</span>
+    </div>
+
+    <div class="role-large-card">
+      <div class="role-icon-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="role-meta-copy">
+        <strong id="securityScopeText">All Regions (Full Visibility)</strong>
+        <p id="securityLevelText">Access Level: Executive · Pre-Query Filter Construction</p>
+      </div>
+    </div>
+
+    <div class="subheading-label">Authorized Regions</div>
+    <div class="chips-container" id="authorizedRegionChips">
+      <span class="chip active">North</span>
+      <span class="chip active">South</span>
+      <span class="chip active">East</span>
+      <span class="chip active">West</span>
+    </div>
+
+    <div class="sec-callout">
+      <div class="sec-callout-icon">ℹ️</div>
+      <div class="sec-callout-text">
+        When an analytical query runs, the DuckDB SQL template strictly embeds <code>WHERE region IN (...)</code> using only authorized regions verified by the RBAC module.
+      </div>
+    </div>
+  </article>
+
+  <!-- Live Query Authorization Tester -->
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="eyebrow">Pre-Query Interceptor</div>
+        <h3>Live Authorization Test</h3>
+      </div>
+      <span class="tag calc">Simulation</span>
+    </div>
+
+    <p class="panel-sub">Test whether a specific user role would be permitted to query data for a selected region and KPI:</p>
+
+    <div class="form-stack">
+      <label class="field">
+        <span class="field-label">Test Role</span>
+        <select id="secTestRole" class="select-input"></select>
+      </label>
+
+      <div class="form-row-2">
+        <label class="field">
+          <span class="field-label">Target Region</span>
+          <select id="secTestRegion" class="select-input">
+            <option value="North">North</option>
+            <option value="South">South</option>
+            <option value="East">East</option>
+            <option value="West">West</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span class="field-label">Target KPI</span>
+          <select id="secTestKpi" class="select-input">
+            <option value="revenue">Revenue</option>
+            <option value="orders">Orders</option>
+            <option value="asp">ASP</option>
+            <option value="conversion_rate">Conversion Rate</option>
+            <option value="inventory_stockout_rate">Inventory Stockout Rate</option>
+          </select>
+        </label>
+      </div>
+
+      <button class="primary full-btn" id="runAuthTest">
+        <span>Test Authorization Rule</span>
+        <span>→</span>
+      </button>
+
+      <!-- Test Result Box -->
+      <div id="authResultBox" class="result-box hidden"></div>
+    </div>
+  </article>
+</div>
+
+<!-- NEW: External Enterprise Database Connector Console -->
+<div class="panel section-gap">
+  <div class="panel-head">
+    <div>
+      <div class="eyebrow">Data Integration</div>
+      <h3>External Enterprise Database Connector</h3>
+    </div>
+    <span class="tag calc">Live Bridge</span>
+  </div>
+
+  <p class="panel-sub">
+    Connect to external live database servers (<strong>PostgreSQL, MySQL, SQLite, Snowflake, DuckDB</strong>) and ingest remote telemetry into analytical memory:
+  </p>
+
+  <div class="form-row-2" style="margin-bottom: 16px;">
+    <label class="field">
+      <span class="field-label">Database Engine</span>
+      <select id="dbEngineSel" class="select-input">
+        <option value="sqlite">SQLite</option>
+        <option value="duckdb">DuckDB</option>
+        <option value="postgresql">PostgreSQL</option>
+        <option value="mysql">MySQL</option>
+        <option value="snowflake">Snowflake</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span class="field-label">Connection String / File Path</span>
+      <input type="text" id="dbConnStr" class="select-input" value="data/inventory.csv" placeholder="e.g. data/inventory.csv or postgresql://user:***@host/db">
+    </label>
+  </div>
+
+  <div class="form-row-2" style="margin-bottom: 16px;">
+    <label class="field">
+      <span class="field-label">Target Analytical Table</span>
+      <select id="dbTargetTbl" class="select-input">
+        <option value="inventory">inventory (Stockout telemetry)</option>
+        <option value="sales">sales (Transaction logs)</option>
+        <option value="marketing">marketing (Campaign metrics)</option>
+        <option value="support">support (Customer tickets)</option>
+        <option value="competitor">competitor (Price logs)</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span class="field-label">Extraction SQL Query</span>
+      <input type="text" id="dbQuerySql" class="select-input" value="SELECT * FROM inventory" placeholder="SELECT * FROM table">
+    </label>
+  </div>
+
+  <button class="primary" id="btnConnectExtDb" style="align-self: flex-start;">
+    <span>🔌 Test Connection & Ingest Data</span>
+    <span>→</span>
+  </button>
+
+  <div id="extDbResultBox" class="result-box hidden" style="margin-top: 16px;"></div>
+</div>
+
+<!-- RBAC Policy Matrix (7 Roles) -->
+<div class="panel section-gap">
+  <div class="panel-head">
+    <div>
+      <div class="eyebrow">Governance & Compliance</div>
+      <h3>Complete RBAC Policy Map</h3>
+    </div>
+    <span class="tag outline">7 Role Tiers</span>
+  </div>
+
+  <div class="policy-table-wrapper" id="policyTableWrapper">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Role Identifier</th>
+          <th>Display Name</th>
+          <th>Access Level</th>
+          <th>Authorized Scope</th>
+          <th>Accessible Metrics</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>executive</code></td>
+          <td><strong>Executive</strong></td>
+          <td><span class="tag safe">Executive (Level 3)</span></td>
+          <td>North, South, East, West</td>
+          <td>All 5 KPIs (Full Access)</td>
+        </tr>
+        <tr>
+          <td><code>ops_lead</code></td>
+          <td><strong>Operations & Logistics Lead</strong></td>
+          <td><span class="tag safe">Operations (Level 2)</span></td>
+          <td>North, South, East, West</td>
+          <td>Inventory Stockout, Orders, Delivery SLAs</td>
+        </tr>
+        <tr>
+          <td><code>regional_manager_south</code></td>
+          <td><strong>Regional Manager (South)</strong></td>
+          <td><span class="tag calc">Regional (Level 2)</span></td>
+          <td>South Only</td>
+          <td>All Regional KPIs</td>
+        </tr>
+        <tr>
+          <td><code>regional_manager_north</code></td>
+          <td><strong>Regional Manager (North)</strong></td>
+          <td><span class="tag calc">Regional (Level 2)</span></td>
+          <td>North Only</td>
+          <td>All Regional KPIs</td>
+        </tr>
+        <tr>
+          <td><code>regional_manager_east</code></td>
+          <td><strong>Regional Manager (East)</strong></td>
+          <td><span class="tag calc">Regional (Level 2)</span></td>
+          <td>East Only</td>
+          <td>All Regional KPIs</td>
+        </tr>
+        <tr>
+          <td><code>regional_manager_west</code></td>
+          <td><strong>Regional Manager (West)</strong></td>
+          <td><span class="tag calc">Regional (Level 2)</span></td>
+          <td>West Only</td>
+          <td>All Regional KPIs</td>
+        </tr>
+        <tr>
+          <td><code>analyst</code></td>
+          <td><strong>Data Analyst</strong></td>
+          <td><span class="tag safe">Read-Only (Level 1)</span></td>
+          <td>North, South, East, West</td>
+          <td>All KPIs (Read-Only)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

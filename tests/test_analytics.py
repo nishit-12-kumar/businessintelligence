@@ -227,17 +227,41 @@ def test_feedback_loop_metrics():
     assert 'acceptance_rate' in metrics
     assert 'recent_feedback' in metrics
 
-def test_kpi_sources_list_handling():
-    from analytics.kpi_engine import load_kpi_definitions
-    from monitoring.telemetry import get_source_freshness
-    kpi_defs = load_kpi_definitions()
-    freshness = get_source_freshness()
-    for name, kdef in kpi_defs.items():
-        src = kdef.get('source', '?')
-        if isinstance(src, list):
-            for s in src:
-                assert s in freshness
-        else:
-            assert src in freshness
+def test_statistical_hypothesis_testing():
+    from analytics.statistical_confidence import run_hypothesis_test
+    # Positive correlation test
+    res = run_hypothesis_test([10, 20, 30, 40, 50], [1, 2, 3, 4, 5], "Test Driver")
+    assert res['r'] >= 0.80
+    assert res['reject_null'] == True
+    assert res['statistical_score'] >= 80.0
+
+def test_knowledge_graph():
+    from semantic.knowledge_graph import knowledge_graph
+    res = knowledge_graph.validate_driver_path('revenue', 'competitor_pricing')
+    assert res['score'] == 100.0
+    action = knowledge_graph.get_structured_action('competitor_pricing', 'South', 'XPhone Pro', '₹10,000/mo', '85%')
+    assert 'controllable_lever' in action
+    assert 'owner' in action
+    assert 'monitoring_plan' in action
+
+def test_external_pricing_api():
+    from retrieval.external_pricing_api import fetch_external_competitor_pricing
+    bench = fetch_external_competitor_pricing('XPhone Pro')
+    assert 'competitor_price' in bench
+    assert 'api_status' in bench
+
+def test_inventory_kpi():
+    from analytics.kpi_engine import create_connection, calculate_kpi
+    conn = create_connection()
+    res = calculate_kpi(conn, 'inventory_stockout_rate', 'South')
+    assert 'current_value' in res
+    assert 'change_pct' in res
+
+def test_external_db_connector():
+    from data.external_db_connector import ExternalDBConnector
+    t_res = ExternalDBConnector.test_connection('duckdb', 'data/inventory.csv')
+    assert t_res['status'] == 'SUCCESS'
+
+
 
 

@@ -8,12 +8,17 @@ All numbers, drivers, and evidence come from the analytics pipeline.
 """
 import os
 import time
+import logging
 from typing import Dict, Optional, Any
 
+logger = logging.getLogger(__name__)
+
+# Bug #5 fix: migrate from deprecated google-generativeai to google-genai
 try:
-    import google.generativeai as genai
+    from google import genai as _genai_client_lib
     GENAI_AVAILABLE = True
 except ImportError:
+    _genai_client_lib = None
     GENAI_AVAILABLE = False
 
 import sys
@@ -26,14 +31,11 @@ from monitoring.telemetry import TelemetryTracker
 MODEL_NAME = 'gemini-2.0-flash'  # Free tier model
 
 def _configure_genai():
-    """Configure the Gemini API with the API key."""
+    """Return a configured google-genai Client, or None if no key / package missing."""
     api_key = os.environ.get('GOOGLE_API_KEY', '')
-    if not api_key:
-        return False
-    if GENAI_AVAILABLE:
-        genai.configure(api_key=api_key)
-        return True
-    return False
+    if not api_key or not GENAI_AVAILABLE or _genai_client_lib is None:
+        return None
+    return _genai_client_lib.Client(api_key=api_key)
 
 def _build_analysis_data(kpi_result: Dict, driver_result: Dict, 
                           actions: list, all_evidence: Dict) -> Dict:
@@ -120,29 +122,30 @@ def generate_narrative(kpi_result: Dict, driver_result: Dict,
         prompt = get_regional_manager_prompt(analysis_data)
     else:
         prompt = get_executive_prompt(analysis_data)  # default
-    
-    # Try to call Gemini
-    is_configured = _configure_genai()
-    
-    if is_configured and GENAI_AVAILABLE:
+
+    # Try to call Gemini via the google-genai SDK
+    client = _configure_genai()
+
+    if client is not None:
         try:
-            model = genai.GenerativeModel(MODEL_NAME)
-            
             start_time = time.time()
-            response = model.generate_content(prompt)
+            response = client.models.generate_content(
+                model=MODEL_NAME,
+                contents=prompt
+            )
             elapsed = time.time() - start_time
-            
-            # Extract token counts
-            usage = response.usage_metadata
+
+            # Extract token counts (google-genai usage_metadata)
+            usage = getattr(response, 'usage_metadata', None)
             input_tokens = getattr(usage, 'prompt_token_count', 0) or 0
             output_tokens = getattr(usage, 'candidates_token_count', 0) or 0
-            
+
             # Record telemetry
             if telemetry:
                 telemetry.record_llm_call(input_tokens, output_tokens, MODEL_NAME)
-            
+
             narrative_text = response.text
-            
+
             return {
                 'narrative': narrative_text,
                 'persona': persona,
@@ -152,9 +155,10 @@ def generate_narrative(kpi_result: Dict, driver_result: Dict,
                 'input_tokens': input_tokens,
                 'output_tokens': output_tokens
             }
-            
-        except Exception as e:
-            # Fallback to template-based narrative
+
+        except Exception as exc:
+            # Improvement #1: log before falling back so real bugs are visible
+            logger.warning("Gemini generate_content failed, using fallback narrative: %s", exc)
             return _generate_fallback_narrative(analysis_data, persona)
     else:
         # No API key or genai not available — use fallback

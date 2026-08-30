@@ -1,0 +1,106 @@
+<!-- Business Pulse Overview -->
+<div class="hero-row">
+  <div class="hero-copy">
+    <div class="eyebrow-badge">
+      <span class="badge-dot"></span> Decision Intelligence
+    </div>
+    <h1 class="hero-title">See the signal.<br><em>Know what to do.</em></h1>
+    <p class="hero-desc">
+      BusinessIntelligence.ai turns multidimensional KPI anomalies into an evidence-backed decision path — from root-cause attribution to defensible action.
+    </p>
+  </div>
+
+  <div class="hero-card">
+    <div class="hero-card-tag">Priority Signal Detected</div>
+    <strong class="hero-card-title" id="heroFocus">Revenue / South</strong>
+    <div class="hero-meta">
+      <span class="pill danger" id="heroChange">−12.4% Drop</span>
+      <span class="pill outline">Exposure: ₹18.4L/mo</span>
+    </div>
+    <p class="hero-card-desc">Competitor price matching & logistics delay spikes identified in South region.</p>
+    <a class="primary full-btn" href="/investigation" id="heroInvestigateBtn">
+      <span>Investigate Signal</span>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<!-- Section: Business Pulse Cards (5 Core KPIs) -->
+<div class="section-head">
+  <div>
+    <div class="eyebrow">01 — Business Pulse</div>
+    <h2>What should I care about right now?</h2>
+  </div>
+  <button class="ghost-btn" id="pulseRefresh" title="Refresh live telemetry and calculations">
+    <span>Refresh Signals</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+  </button>
+</div>
+
+<!-- KPI Metric Cards Grid (Supports 5 KPIs) -->
+<div class="metric-grid metric-grid-5" id="metricGrid">
+  <div class="skeleton-card"></div>
+  <div class="skeleton-card"></div>
+  <div class="skeleton-card"></div>
+  <div class="skeleton-card"></div>
+  <div class="skeleton-card"></div>
+</div>
+
+<!-- Split Signals & Freshness Grid -->
+<div class="split-grid section-gap">
+  <!-- Priority Anomalies Requiring Attention -->
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="eyebrow">Anomalies Detected</div>
+        <h3>Requires Attention</h3>
+      </div>
+      <span class="count-badge" id="alertCount">0</span>
+    </div>
+    <div id="alerts" class="stack">
+      <div class="skeleton-card" style="height: 90px;"></div>
+    </div>
+  </article>
+
+  <!-- Performing Well & Data Freshness -->
+  <div class="panel-column">
+    <article class="panel">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">System Baseline</div>
+          <h3>Performing Well</h3>
+        </div>
+        <span class="tag safe">Within Threshold</span>
+      </div>
+      <div id="healthyList" class="stack">
+        <div class="skeleton-card" style="height: 70px;"></div>
+      </div>
+    </article>
+
+    <article class="panel section-gap-sm">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Data Quality</div>
+          <h3>Source Freshness</h3>
+        </div>
+        <span class="success-pill" id="freshnessSummary">All Fresh</span>
+      </div>
+      <div id="freshness" class="freshness-stack">
+        <div class="skeleton-card" style="height: 60px;"></div>
+      </div>
+      <div class="source-note">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <span>Stale sources automatically trigger confidence penalties before recommendations are generated.</span>
+      </div>
+    </article>
+  </div>
+</div>
+
+<!-- Editorial Quote Band -->
+<div class="quote-band">
+  <div class="quote-mark">“</div>
+  <div class="quote-content">
+    <p>What matters is not another passive dashboard. It’s a decision you can defend with evidence.</p>
+    <small>BusinessIntelligence.ai Decision Framework</small>
+  </div>
+</div>

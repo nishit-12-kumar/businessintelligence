@@ -1,0 +1,193 @@
+<!-- Outcomes & Feedback Learning Loop -->
+<div class="page-intro">
+  <div>
+    <div class="eyebrow-badge">
+      <span class="badge-dot"></span> 05 — Decision Outcomes & Telemetry
+    </div>
+    <h1 class="page-title">Close the loop.<br><em>Learn from decisions.</em></h1>
+    <p class="page-desc">
+      Track recommendation acceptance rates, log stakeholder decisions, and monitor runtime telemetry and production LLM economics. This is feedback tracking — not unverified online learning.
+    </p>
+  </div>
+</div>
+
+<!-- Outcomes Metric Cards Grid -->
+<div class="outcome-grid" id="outcomeGrid">
+  <article class="outcome-card">
+    <div class="metric-top">
+      <span>Issued Actions</span>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    </div>
+    <strong id="outcomesIssued">42</strong>
+    <span class="muted">Total generated</span>
+  </article>
+
+  <article class="outcome-card">
+    <div class="metric-top">
+      <span>Accepted Actions</span>
+      <span class="metric-dot healthy"></span>
+    </div>
+    <strong id="outcomesAccepted" class="positive-text">28</strong>
+    <span class="muted">Implemented by teams</span>
+  </article>
+
+  <article class="outcome-card">
+    <div class="metric-top">
+      <span>Rejected Actions</span>
+      <span class="metric-dot critical"></span>
+    </div>
+    <strong id="outcomesRejected" class="negative-text">14</strong>
+    <span class="muted">Overruled or deferred</span>
+  </article>
+
+  <article class="outcome-card highlight-card">
+    <div class="metric-top">
+      <span>Acceptance Rate</span>
+      <span class="tag safe">Alignment</span>
+    </div>
+    <strong id="outcomesRate">66.7%</strong>
+    <span class="muted">Stakeholder adoption</span>
+  </article>
+</div>
+
+<!-- Split Feedback Log and Telemetry -->
+<div class="two-col section-gap">
+  <!-- Recent Feedback Log -->
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="eyebrow">Audit Trail</div>
+        <h3>Recent Decision Log</h3>
+      </div>
+      <span class="tag outline">feedback.json</span>
+    </div>
+    <div id="feedbackList" class="feedback-stack">
+      <div class="skeleton-card" style="height: 70px;"></div>
+    </div>
+  </article>
+
+  <!-- Performance Telemetry & LLM Economics -->
+  <article class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="eyebrow">Runtime Performance</div>
+        <h3>Pipeline Telemetry & Economics</h3>
+      </div>
+      <span class="tag calc">Live Run</span>
+    </div>
+
+    <div class="telemetry-grid" id="telemetryGrid">
+      <div class="telemetry-box">
+        <span>Execution Latency</span>
+        <strong id="telLatency">1,280 ms</strong>
+      </div>
+      <div class="telemetry-box">
+        <span>LLM API Calls</span>
+        <strong id="telLlmCalls">1</strong>
+      </div>
+      <div class="telemetry-box">
+        <span>Pipeline Steps</span>
+        <strong id="telSteps">8</strong>
+      </div>
+    </div>
+
+    <!-- NEW: LLM Economics & Production Cost Projection Table -->
+    <div class="subheading-label" style="margin-top: 18px;">💡 LLM Economics & Production Cost Projection</div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Economic Metric</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody id="economicsRows">
+          <tr>
+            <td>Actual Current Cost</td>
+            <td><span class="tag safe">$0.0000 (Gemini 2.0 Flash Free Tier)</span></td>
+          </tr>
+          <tr>
+            <td>Commercial Paid Input Rate</td>
+            <td>$0.15 per 1M tokens ($0.00015/1k)</td>
+          </tr>
+          <tr>
+            <td>Commercial Paid Output Rate</td>
+            <td>$0.60 per 1M tokens ($0.00060/1k)</td>
+          </tr>
+          <tr>
+            <td>Est. Paid Cost / Investigation Run</td>
+            <td><strong id="econPerRun">$0.000750</strong></td>
+          </tr>
+          <tr>
+            <td>Projected Cost (10,000 Runs/Month)</td>
+            <td><strong id="econ10k" class="positive-text">$7.50 / month</strong></td>
+          </tr>
+          <tr>
+            <td>Total Tokens Processed</td>
+            <td><strong id="econTokens">1,450 tokens</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subheading-label" style="margin-top: 18px;">Analytical Step Breakdown</div>
+    <div id="telemetryTable" class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Step Sequence</th>
+            <th>Analytical Task</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="telemetryRows">
+          <tr>
+            <td>1</td>
+            <td>Role Authorization Check</td>
+            <td><span class="tag safe">Passed</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>DuckDB Period KPI Calculation</td>
+            <td><span class="tag safe">Passed</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Variance Decomposition</td>
+            <td><span class="tag safe">Passed</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Statistical Hypothesis Correlation Test</td>
+            <td><span class="tag safe">Passed</span></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Knowledge Graph Ontology Path Validation</td>
+            <td><span class="tag safe">Passed</span></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Semantic Evidence Retrieval & Contradiction Check</td>
+            <td><span class="tag safe">Passed</span></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Hybrid Confidence & Sanity Check</td>
+            <td><span class="tag safe">Passed</span></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>Guardrailed Structured Actions & Recommendations</td>
+            <td><span class="tag safe">Passed</span></td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>LLM Role-Adapted Synthesis</td>
+            <td><span class="tag safe">Passed</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </article>
+</div>

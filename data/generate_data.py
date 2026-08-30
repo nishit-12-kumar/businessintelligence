@@ -9,7 +9,7 @@ np.random.seed(42)
 random.seed(42)
 
 def generate_data():
-    base_dir = "/Users/itsarifworld/Desktop/Placements/projectsssssssss/business/business-intelligence-ai/data"
+    base_dir = os.path.dirname(os.path.abspath(__file__))
     
     # 1. SALES DATA
     dates = pd.date_range(start='2026-07-01', end='2026-08-27')
@@ -239,6 +239,32 @@ def generate_data():
         
     pd.DataFrame(competitor_data).to_csv(os.path.join(base_dir, 'competitor.csv'), index=False)
 
+    # 5. INVENTORY DATA
+    inv_data = []
+    for date in pd.date_range(start='2026-08-01', end='2026-08-27'):
+        for region in regions:
+            for product in products:
+                if product == 'NovaWatch' and date < pd.Timestamp('2026-08-16'):
+                    continue
+                stock_units = int(random.randint(50, 450))
+                holding_cost = int(random.randint(1200, 4800))
+                # South XPhone Pro has stockout events in late Aug
+                if region == 'South' and product == 'XPhone Pro' and date >= pd.Timestamp('2026-08-21'):
+                    stockouts = random.choice([1, 2, 3])
+                else:
+                    stockouts = 1 if random.random() < 0.04 else 0
+                    
+                inv_data.append({
+                    'date': date.strftime('%Y-%m-%d'),
+                    'region': region,
+                    'product': product,
+                    'stock_units': stock_units,
+                    'stockout_events': stockouts,
+                    'holding_cost_inr': holding_cost
+                })
+    pd.DataFrame(inv_data).to_csv(os.path.join(base_dir, 'inventory.csv'), index=False)
+
 if __name__ == '__main__':
     generate_data()
-    print("Data generation completed.")
+    print("Data generation completed (sales, marketing, support, competitor, inventory).")
+

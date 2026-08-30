@@ -1,0 +1,92 @@
+<!-- Investigation Decision Workspace -->
+<div class="page-intro">
+  <div>
+    <div class="eyebrow-badge">
+      <span class="badge-dot"></span> 02 — Investigation Workspace
+    </div>
+    <h1 class="page-title">Follow the signal<br><em>all the way down.</em></h1>
+    <p class="page-desc">
+      Inspect movement, driver variance, statistical correlation, evidence, knowledge graph ontology, confidence, recommendations, and scenario impact in one continuous, defensible decision workflow.
+    </p>
+  </div>
+</div>
+
+<!-- Sticky / Prominent Investigation Control Bar -->
+<div class="control-bar" id="investigationControls">
+  <div class="control-grid">
+    <label class="field">
+      <span class="field-label">Target KPI</span>
+      <select id="kpi" class="select-input">
+        <option value="revenue">💰 Revenue</option>
+        <option value="orders">📦 Orders</option>
+        <option value="asp">🏷️ Average Selling Price</option>
+        <option value="conversion_rate">🎯 Conversion Rate</option>
+        <option value="inventory_stockout_rate">📦 Inventory Stockout Rate</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span class="field-label">Region</span>
+      <select id="region" class="select-input">
+        <option value="South">South Region</option>
+        <option value="North">North Region</option>
+        <option value="East">East Region</option>
+        <option value="West">West Region</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span class="field-label">Product Scope</span>
+      <select id="product" class="select-input">
+        <option value="All Products">All Products</option>
+        <option value="XPhone Pro">XPhone Pro (58d History)</option>
+        <option value="TabMax">TabMax (58d History)</option>
+        <option value="NovaWatch">NovaWatch (Sparse History — 11d)</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="control-actions">
+    <div class="toggle-pills">
+      <label class="toggle-pill" title="Run offline-safe deterministic evaluation">
+        <input type="checkbox" id="demoMode" checked>
+        <span class="pill-track"></span>
+        <span class="pill-text">🎬 Demo Mode</span>
+      </label>
+
+      <label class="toggle-pill" title="Simulate 9-day-old marketing data to test confidence penalty">
+        <input type="checkbox" id="staleMode">
+        <span class="pill-track"></span>
+        <span class="pill-text">🕐 Stale Marketing</span>
+      </label>
+    </div>
+
+    <button class="primary run-btn" id="runInvestigation">
+      <span class="btn-text">Run Investigation</span>
+      <span class="btn-icon">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- Investigation Status Strip -->
+<div id="investigationStatus" class="status-strip hidden"></div>
+
+<!-- Empty State (Before run) -->
+<div id="investigationEmpty" class="empty-investigation">
+  <div class="empty-icon-wrap">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+  </div>
+  <h3>Ready to Investigate</h3>
+  <p>Select your KPI, region, and product parameters above, then click <strong>Run Investigation</strong>. The orchestrator will evaluate movement, decompose drivers, run statistical hypothesis tests, match ontology knowledge graph paths, score 3-way hybrid confidence, and generate guardrailed actions.</p>
+  <div class="sample-chips">
+    <span>💡 Suggested Scenarios:</span>
+    <button class="chip-btn" data-kpi="revenue" data-region="South" data-product="XPhone Pro">South Revenue Drop (Primary)</button>
+    <button class="chip-btn" data-kpi="revenue" data-region="East" data-product="NovaWatch">NovaWatch (Sparse History)</button>
+    <button class="chip-btn" data-kpi="inventory_stockout_rate" data-region="South" data-product="XPhone Pro">Inventory Stockout Rate</button>
+  </div>
+</div>
+
+<!-- Live Investigation Results Container -->
+<div id="investigationResults" class="investigation-story hidden">
+  <!-- Rendered dynamically by static/js/app.js -->
+</div>

@@ -8,14 +8,19 @@ import pandas as pd
 import re
 import math
 import os
+import logging
 from collections import Counter
 from typing import List, Dict, Optional, Any
 from analytics.kpi_engine import get_date_periods
 
+logger = logging.getLogger(__name__)
+
+# Bug #5 fix: migrate from deprecated google-generativeai to google-genai
 try:
-    import google.generativeai as genai
+    from google import genai as _genai_client_lib
     GENAI_AVAILABLE = True
 except ImportError:
+    _genai_client_lib = None
     GENAI_AVAILABLE = False
 
 # --- Semantic Helper Functions ---
@@ -84,32 +89,38 @@ def calculate_tf_idf_similarity(query: str, documents: List[str]) -> List[float]
     return scores
 
 def calculate_gemini_similarity(query: str, documents: List[str]) -> List[float]:
-    """Calculate semantic similarity using Gemini Embeddings API if available."""
+    """Calculate semantic similarity using Gemini Embeddings API if available.
+    
+    Uses text-embedding-004 (current model) via the google-genai SDK.
+    Falls back to empty list (which triggers TF-IDF) when no API key or unavailable.
+    """
     api_key = os.environ.get('GOOGLE_API_KEY', '')
-    if not api_key or not GENAI_AVAILABLE:
+    if not api_key or not GENAI_AVAILABLE or _genai_client_lib is None:
         return []
     try:
-        genai.configure(api_key=api_key)
+        client = _genai_client_lib.Client(api_key=api_key)
         # Embed query
-        query_emb = genai.embed_content(
-            model="models/embedding-001",
-            content=query,
-            task_type="retrieval_query"
-        )['embedding']
-        
-        # Embed documents
-        doc_embs = genai.embed_content(
-            model="models/embedding-001",
-            content=documents,
-            task_type="retrieval_document"
-        )['embedding']
-        
+        query_resp = client.models.embed_content(
+            model="models/text-embedding-004",
+            contents=query
+        )
+        query_emb = query_resp.embeddings[0].values
+
+        # Embed documents one at a time (batch if needed)
+        doc_embs = []
+        for doc in documents:
+            resp = client.models.embed_content(
+                model="models/text-embedding-004",
+                contents=doc
+            )
+            doc_embs.append(resp.embeddings[0].values)
+
         def dot_product(v1, v2):
             return sum(x * y for x, y in zip(v1, v2))
-            
+
         def norm(v):
             return math.sqrt(sum(x * x for x in v))
-            
+
         q_norm = norm(query_emb)
         scores = []
         for d_emb in doc_embs:
@@ -119,8 +130,8 @@ def calculate_gemini_similarity(query: str, documents: List[str]) -> List[float]
             else:
                 scores.append(dot_product(query_emb, d_emb) / (q_norm * d_norm))
         return scores
-    except Exception:
-        # Fallback to TF-IDF on error
+    except Exception as exc:
+        logger.warning("Gemini embedding call failed, falling back to TF-IDF: %s", exc)
         return []
 
 def calculate_semantic_scores(query: str, documents: List[str]) -> List[float]:

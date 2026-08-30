@@ -1,9 +1,9 @@
 {
-    "recommendations_issued": 48,
-    "accepted": 34,
+    "recommendations_issued": 78,
+    "accepted": 64,
     "rejected": 14,
-    "implemented": 27,
-    "successful": 22,
+    "implemented": 57,
+    "successful": 52,
     "logs": [
         {
             "insight": "South revenue drop -12.4%",
@@ -60,6 +60,246 @@
             "actioned": "accepted",
             "outcome": "successful",
             "timestamp": "2026-08-29 19:19:47"
+        },
+        {
+            "insight": "orders (East)",
+            "recommendation": "Continue monitoring & collect additional data",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-29 20:10:02"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 15:54:24"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 15:57:32"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 15:58:48"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 16:01:26"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 18:33:36"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 18:34:13"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 18:36:03"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 18:48:55"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 18:51:20"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 18:54:00"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 19:01:06"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 19:10:19"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 19:20:56"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 19:21:16"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 19:22:46"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 19:47:47"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 19:54:53"
+        },
+        {
+            "insight": "revenue (South)",
+            "recommendation": "Restore marketing spend for XPhone Pro",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 19:54:59"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 19:55:46"
+        },
+        {
+            "insight": "revenue (South)",
+            "recommendation": "Restore marketing spend for XPhone Pro",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 19:55:49"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 20:13:25"
+        },
+        {
+            "insight": "revenue (South)",
+            "recommendation": "Restore marketing spend for XPhone Pro",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 20:13:34"
+        },
+        {
+            "insight": "revenue (West)",
+            "recommendation": "Reinstate local performance campaigns for TabMax in West",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 20:14:49"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 20:32:28"
+        },
+        {
+            "insight": "revenue (South)",
+            "recommendation": "Restore marketing spend for XPhone Pro",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 20:32:38"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 20:33:35"
+        },
+        {
+            "insight": "revenue (South)",
+            "recommendation": "Restore marketing spend for XPhone Pro",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 20:33:44"
+        },
+        {
+            "insight": "Test KPI",
+            "recommendation": "Test action",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 21:18:29"
+        },
+        {
+            "insight": "revenue (South)",
+            "recommendation": "Restore marketing spend for XPhone Pro",
+            "rating": "thumbs_up",
+            "actioned": "accepted",
+            "outcome": "successful",
+            "timestamp": "2026-08-30 21:18:38"
         }
     ]
 }

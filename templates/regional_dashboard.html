@@ -1,0 +1,80 @@
+<!-- Regional Dashboard View -->
+<div class="hero-row">
+  <div class="hero-copy">
+    <div class="eyebrow-badge">
+      <span class="badge-dot"></span> Regional Access (Level 2)
+    </div>
+    <h1 class="hero-title">{{ role_info.get('label', 'Regional Manager') }}<br><em>Operations View.</em></h1>
+    <p class="hero-desc">
+      Scoped strictly to authorized regions: <strong>{{ allowed_regions|join(', ') }}</strong>. Pre-query RBAC filters ensure only your territory's data is calculated.
+    </p>
+  </div>
+  <div class="hero-card">
+    <div class="hero-card-tag">Territory Scope</div>
+    <strong class="hero-card-title">{{ allowed_regions|join(', ') }} Region</strong>
+    <p class="hero-card-desc">Regional KPI tracking, driver alerts, and tactical execution plans.</p>
+    <a href="/investigation" class="primary full-btn">
+      <span>Open Investigation Workspace</span>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<div class="section-head">
+  <div>
+    <div class="eyebrow">Regional Performance</div>
+    <h2>KPIs for {{ allowed_regions|join(', ') }}</h2>
+  </div>
+</div>
+
+<div class="metric-grid metric-grid-5" id="metricGrid">
+  {% for k in kpis %}
+  <article class="metric-card">
+    <div class="metric-top">
+      <span>{{ k.definition }}</span>
+      <span class="metric-dot {{ 'critical' if k.change < -k.threshold else 'healthy' }}"></span>
+    </div>
+    <div class="metric-value">{{ k.value }}</div>
+    <div class="metric-foot">
+      <span class="delta {{ 'down' if k.change < 0 else 'up' }}">{{ '+' if k.change >= 0 else '' }}{{ "%.1f"|format(k.change) }}%</span>
+      <span class="muted">vs prior 7d</span>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+
+<!-- Regional Anomaly Feed -->
+<div class="panel section-gap">
+  <div class="panel-head">
+    <div>
+      <div class="eyebrow">Regional Alerts</div>
+      <h3>Anomalies in {{ allowed_regions|join(', ') }}</h3>
+    </div>
+    <span class="count-badge">{{ anomalies|length }} Active</span>
+  </div>
+
+  <div class="stack">
+    {% for a in anomalies %}
+    <div class="alert-card {{ 'critical' if a.is_significant and a.change_pct < 0 else 'watch' }}">
+      <div class="alert-icon-box">!</div>
+      <div class="alert-body">
+        <div class="alert-line">
+          <strong>{{ a.kpi_name.upper() }} · {{ a.region }} ({{ a.product or 'All Products' }})</strong>
+          <span class="tag {{ 'critical' if a.is_significant else 'safe' }}">{{ "%.1f"|format(a.change_pct) }}% Movement</span>
+        </div>
+        <div class="alert-stats">
+          <span>Current: <strong>{{ "%.2f"|format(a.current_value) }}</strong></span>
+          <span>Previous: <strong>{{ "%.2f"|format(a.previous_value) }}</strong></span>
+          <span>Threshold: <strong>{{ a.threshold }}%</strong></span>
+        </div>
+        <a href="/anomaly/{{ a.kpi_name }}|{{ a.region }}|{{ a.product | urlencode if a.product else 'All' }}" class="inline-link">
+          <span>Inspect Root-Cause Drivers &amp; Actions</span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+    {% else %}
+    <div class="healthy-card"><strong>✅ No critical anomalies detected in {{ allowed_regions|join(', ') }}.</strong></div>
+    {% endfor %}
+  </div>
+</div>
